@@ -1,2 +1,20 @@
 Gözlük
 
+linux video stram passing
+--------------------------
+https://www.linux-projects.org/uv4l/tutorials/rtsp-server/
+https://dominoc925.blogspot.com/2021/09/how-to-quickly-publish-rtsp-stream.html
+https://superuser.com/questions/766437/capture-rtsp-stream-from-ip-camera-and-store
+
+commands
+--------
+list formats of cameras => ffmpeg -f video4linux2 -list_formats all -i /dev/video0
+
+server => ./rtsp-simple-server
+server ffmpeg => ffmpeg -f v4l2 -input_format yuyv422 -framerate 60 -video_size 640x480 -i /dev/video0 -c:v libx264 -vf format=yuv420p output.mp4 -f rtsp rtsp://localhost:8554/mystream
+client => mplayer rtsp://ahmet@ahmet@localhost:8554/mystream
+
+link video stream
+-----------------
+https://superuser.com/questions/494575/ffmpeg-open-webcam-using-yuyv-but-i-want-mjpeg
+
