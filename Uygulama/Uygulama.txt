@@ -1,2 +1,3 @@
 Uygulama
 
+Uygulama ip çözüm => https://stackoverflow.com/questions/17302220/android-get-ip-address-of-a-hotspot-providing-device
