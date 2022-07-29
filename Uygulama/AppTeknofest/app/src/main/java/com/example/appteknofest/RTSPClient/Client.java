@@ -1,4 +1,4 @@
-package com.example.appteknofest.Socket.RTSPClient;
+package com.example.appteknofest.RTSPClient;
 
 public class Client implements Runnable{
     private Thread thread;
