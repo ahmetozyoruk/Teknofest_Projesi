@@ -54,7 +54,7 @@ public class RegisterFragment extends Fragment {
         //initialize firebase auth
         mAuth = FirebaseAuth.getInstance();
         //register btn click
-        registerBtn.setOnClickListener(view1 -> register(view));
+        registerBtn.setOnClickListener(view1 -> register(view1));
         // back arrow btn click
         btnBack.setOnClickListener(view2 -> goToIntroductionFragment(view2));
     }
@@ -82,8 +82,6 @@ public class RegisterFragment extends Fragment {
     //go to introduction fragment
 
     public void goToIntroductionFragment(View view){
-
-
 
         Navigation.findNavController(view)
                 .navigate(R.id.action_registerFragment_to_introductionragment);

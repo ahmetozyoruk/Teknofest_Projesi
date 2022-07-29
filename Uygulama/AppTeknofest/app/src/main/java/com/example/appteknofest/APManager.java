@@ -110,6 +110,9 @@ public class APManager {
                             try {
                                 ssid = reservation.getWifiConfiguration().SSID;
                                 password = reservation.getWifiConfiguration().preSharedKey;
+//                                ssid = "eyefamGozluk";
+//                                password = "eyefam12345";
+
                                 onSuccessListener.onSuccess(ssid, password);
                             } catch (Exception e) {
                                 e.printStackTrace();
@@ -145,8 +148,10 @@ public class APManager {
                 }
             }
             try {
-                ssid = "AndroidAP_" + new Random().nextInt(10000);
-                password = getRandomPassword();
+//                ssid = "AndroidAP_" + new Random().nextInt(10000);
+                ssid = "eyefamGozluk";
+//                password = getRandomPassword();
+                password = "eyefam";
                 WifiConfiguration wifiConfiguration = new WifiConfiguration();
                 wifiConfiguration.SSID = ssid;
                 wifiConfiguration.preSharedKey = password;

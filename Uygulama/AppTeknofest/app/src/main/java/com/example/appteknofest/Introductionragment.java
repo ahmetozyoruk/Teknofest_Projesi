@@ -17,6 +17,10 @@ import android.widget.Button;
 
 public class Introductionragment extends Fragment {
 
+    private Button loginBtn;
+    private Button registerBtn;
+
+
     public Introductionragment() {
        
     }
@@ -36,8 +40,8 @@ public class Introductionragment extends Fragment {
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
 
-        Button loginBtn = view.findViewById(R.id.loginBtn);
-        Button registerBtn = view.findViewById(R.id.registerBtn);
+        loginBtn = view.findViewById(R.id.loginBtn);
+        registerBtn = view.findViewById(R.id.registerBtn);
 
 
         // login btn click

@@ -46,31 +46,37 @@ public class LogInFragment extends Fragment {
     @Override
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
-        loginTv = view.findViewById(R.id.loginTv);
-        login = view.findViewById(R.id.login);
-        back = view.findViewById(R.id.backForLoginIv);
-        loginEmail = view.findViewById(R.id.loginEmail);
-        loginPassword = view.findViewById(R.id.loginPassword);
+        loginTv =   view.findViewById(R.id.loginTv);
+        login = (Button) view.findViewById(R.id.login);
+        back = (ImageView) view.findViewById(R.id.backForLoginIv);
+        loginEmail =  view.findViewById(R.id.loginEmail);
+        loginPassword =  view.findViewById(R.id.loginPassword);
         //initialize firebase auth
         mAuth = FirebaseAuth.getInstance();
         // login btn click
-        login.setOnClickListener(this::logIn);
+        login.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                logIn(view);
+            }
+        });
         // back arrow btn click
-        back.setOnClickListener(this::backFragment);
+        back.setOnClickListener(view2 -> backFragment(view2));
 
 
     }
     //after login operation,go to main fragment
     public void logIn(View view){
 
-        String email = loginEmail.getText().toString();
-        String password = loginPassword.getText().toString();
+            String email = loginEmail.getText().toString();
+            String password = loginPassword.getText().toString();
 
-        mAuth.signInWithEmailAndPassword(email,password)
-                .addOnSuccessListener(authResult -> Navigation.findNavController(view)
-                        .navigate(R.id.action_logInFragment_to_mainFragment))
-                .addOnFailureListener(e -> Toast.makeText(getActivity(),e.getLocalizedMessage().toString()
-                        ,Toast.LENGTH_LONG).show());
+            mAuth.signInWithEmailAndPassword(email,password)
+                    .addOnSuccessListener(authResult -> Navigation.findNavController(view)
+                            .navigate(R.id.action_logInFragment_to_mainFragment))
+                    .addOnFailureListener(e -> Toast.makeText(getActivity(),e.getLocalizedMessage().toString()
+                            ,Toast.LENGTH_LONG).show());
+
 
     }
 
@@ -90,6 +96,5 @@ public class LogInFragment extends Fragment {
                     .navigate(R.id.action_logInFragment_to_registerFragment);
         }
     }
-
 
 }

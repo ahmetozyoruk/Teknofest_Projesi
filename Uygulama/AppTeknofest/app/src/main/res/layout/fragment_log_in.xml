@@ -15,7 +15,7 @@
         android:layout_marginTop="30dp"
         android:layout_marginBottom="44dp"
         android:src="@drawable/ic_baseline_arrow_back_24"
-        app:layout_constraintBottom_toTopOf="@+id/registerTv"
+        app:layout_constraintBottom_toTopOf="@+id/loginTv"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
 

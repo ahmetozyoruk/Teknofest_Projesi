@@ -1,45 +1,43 @@
-
-#----- A simple TCP based server program in Python using send() function -----
-
  
+#----- A simple TCP client program in Python using send() function -----
 
 import socket
+import json
+import base64 
+
+
+with open('image.jpg', mode='rb') as file:
+    img = file.read()
+imageString = base64.encodebytes(img).decode('utf-8')
+
+x = {
+  "name": "ahmet",
+  "age": 24,
+  "city": "istanbul",
+  "image": imageString
+}
+
+y = json.dumps(x)
+
+# Create a client socket
+clientSocket = socket.socket(socket.AF_INET, socket.SOCK_STREAM);
 
  
 
-# Create a stream based socket(i.e, a TCP socket)
+# Connect to the server
+#clientSocket.connect(("127.0.0.1",9090));
+clientSocket.connect(("192.168.43.1",2222));
+ 
 
-# operating on IPv4 addressing scheme
+# Send data to server
+clientSocket.send(y.encode());
+ 
 
-serverSocket = socket.socket(socket.AF_INET, socket.SOCK_STREAM);
+# Receive data from server
+dataFromServer = clientSocket.recv(1024);
 
  
 
-# Bind and listen
-
-serverSocket.bind(("127.0.0.1",9090));
-
-serverSocket.listen();
-
- 
-
-# Accept connections
-
-while(True):
-
-    (clientConnected, clientAddress) = serverSocket.accept();
-
-    print("Accepted a connection request from %s:%s"%(clientAddress[0], clientAddress[1]));
-
-   
-
-    dataFromClient = clientConnected.recv(1024)
-
-    print(dataFromClient.decode());
-
- 
-
-    # Send some data back to the client
-
-    clientConnected.send("Hello Client!".encode());
+# Print to the console
+print(dataFromServer.decode());
 
