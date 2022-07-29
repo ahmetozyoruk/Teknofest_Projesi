@@ -19,14 +19,14 @@ public class MainActivity extends AppCompatActivity implements APManager.OnSucce
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
-        findViewById(R.id.btnTurnOn).setOnClickListener(v -> {
-            APManager apManager = APManager.getApManager(this);
-            apManager.turnOnHotspot(this,
-                    this,
-                    new DefaultFailureListener(this)
-            );
-
-        });
+//        findViewById(R.id.btnTurnOn).setOnClickListener(v -> {
+//            APManager apManager = APManager.getApManager(this);
+//            apManager.turnOnHotspot(this,
+//                    this,
+//                    new DefaultFailureListener(this)
+//            );
+//
+//        });
 
         this.server = new Server(getApplicationContext());
     }

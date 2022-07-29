@@ -1,3 +1,5 @@
 Uygulama
 
 Uygulama ip çözüm => https://stackoverflow.com/questions/17302220/android-get-ip-address-of-a-hotspot-providing-device
+
+change ssid and password problem => https://stackoverflow.com/questions/47700717/change-wifi-hotspots-ssid-and-password-in-android-oreo-8-x

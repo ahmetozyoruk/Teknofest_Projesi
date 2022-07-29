@@ -149,7 +149,7 @@ public class APManager {
             }
             try {
 //                ssid = "AndroidAP_" + new Random().nextInt(10000);
-                ssid = "EYEFAM_GOZLUK";
+                ssid = "eyefamGozluk";
 //                password = getRandomPassword();
                 password = "eyefam";
                 WifiConfiguration wifiConfiguration = new WifiConfiguration();
