@@ -63,7 +63,7 @@ public class apiActivity extends AppCompatActivity {
 
     private ActivityResultLauncher<String> permissionLauncher;
 
-    private Bitmap bitmap;
+    Bitmap bitmap;
     Feature feature;
     public String api;
     private String[] visionAPI = new String[]{"LANDMARK_DETECTION", "LOGO_DETECTION", "SAFE_SEARCH_DETECTION", "IMAGE_PROPERTIES", "LABEL_DETECTION","TEXT_DETECTION"};
@@ -86,29 +86,61 @@ public class apiActivity extends AppCompatActivity {
         detectExplicitContentIv = findViewById(R.id.detectExplicitContentIv);
         tv = findViewById(R.id.textView);
 
-        mTTS = new TextToSpeech(this,i->{
-           if (i==TextToSpeech.SUCCESS){
-               int result = mTTS.setLanguage(Locale.ENGLISH);
 
-               if (result == TextToSpeech.LANG_MISSING_DATA
-                    || result == TextToSpeech.LANG_NOT_SUPPORTED){
-                   System.out.println("TTS language not supported");
-               }
-           }else{
-               System.out.println("Initialization failed");
-           }
-        });
+        permissionLauncher = registerForActivityResult(new ActivityResultContracts.RequestPermission()
+                , new ActivityResultCallback<Boolean>() {
+                    @Override
+                    public void onActivityResult(Boolean result) {
+                        if (result){
+                            String[] projection = new String[]{
+                                    MediaStore.Images.ImageColumns._ID,
+                                    MediaStore.Images.ImageColumns.DATA,
+                                    MediaStore.Images.ImageColumns.BUCKET_DISPLAY_NAME,
+                                    MediaStore.Images.ImageColumns.DATE_TAKEN,
+                                    MediaStore.Images.ImageColumns.MIME_TYPE
+                            };
+                            final Cursor cursor = getContentResolver()
+                                    .query(MediaStore.Images.Media.EXTERNAL_CONTENT_URI, projection, null,
+                                            null, MediaStore.Images.ImageColumns.DATE_TAKEN + " DESC");
 
-        feature = new Feature();
+                            // Put it in the image view
+                            if (cursor.moveToFirst()) {
+                                final ImageView imageView = (ImageView) findViewById(R.id.imageView);
+                                String imageLocation = cursor.getString(1);
+                                File imageFile = new File(imageLocation);
+                                if (imageFile.exists()) {   // TODO: is there a better way to do this?
+                                    bitmap = BitmapFactory.decodeFile(imageLocation);
+                                    System.out.println("bitmap" + bitmap);
 
-        registerLauncher();
+                                }
+                            }
+                        }
+                    }
+                });
 
-        if (ContextCompat.checkSelfPermission(this,Manifest.permission.READ_EXTERNAL_STORAGE)
-                != PackageManager.PERMISSION_GRANTED){
-            registerLauncher();
+
+
+        if (ContextCompat.checkSelfPermission(this,Manifest.permission
+                .READ_EXTERNAL_STORAGE)!=PackageManager.PERMISSION_GRANTED){
+            permissionLauncher.launch(Manifest.permission.READ_EXTERNAL_STORAGE);
         }else{
             getLastPicture();
         }
+
+        mTTS = new TextToSpeech(this,i->{
+            if (i==TextToSpeech.SUCCESS){
+                int result = mTTS.setLanguage(Locale.ENGLISH);
+
+                if (result == TextToSpeech.LANG_MISSING_DATA
+                        || result == TextToSpeech.LANG_NOT_SUPPORTED){
+                    System.out.println("TTS language not supported");
+                }
+            }else{
+                System.out.println("Initialization failed");
+            }
+        });
+
+        feature = new Feature();
 
         textRecognitionIv.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -184,18 +216,6 @@ public class apiActivity extends AppCompatActivity {
 
     }
 
-    private void registerLauncher(){
-        permissionLauncher = registerForActivityResult(new ActivityResultContracts.RequestPermission()
-                , new ActivityResultCallback<Boolean>() {
-                    @Override
-                    public void onActivityResult(Boolean result) {
-                        if (result){
-                            getLastPicture();
-                        }
-                    }
-                });
-    }
-
     private void getLastPicture(){
         // Find the last picture
         String[] projection = new String[]{
@@ -214,7 +234,7 @@ public class apiActivity extends AppCompatActivity {
             String imageLocation = cursor.getString(1);
             File imageFile = new File(imageLocation);
             if (imageFile.exists()) {
-                bitmap = BitmapFactory.decodeFile(imageLocation);
+                bitmap = (Bitmap) BitmapFactory.decodeFile(imageLocation);
                 System.out.println("bitmap  : " + bitmap);
             }
         }
@@ -224,9 +244,6 @@ public class apiActivity extends AppCompatActivity {
     private void speak(String result){
         mTTS.speak(result,TextToSpeech.QUEUE_FLUSH,null);
     }
-
-
-
 
     private void callCloudVision(final Bitmap bitmap, final Feature feature) {
         final List<Feature> featureList = new ArrayList<>();
