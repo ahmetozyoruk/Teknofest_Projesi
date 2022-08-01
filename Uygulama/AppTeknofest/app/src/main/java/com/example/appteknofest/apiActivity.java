@@ -155,7 +155,9 @@ public class apiActivity extends AppCompatActivity {
                 feature.setType(api);
                 //feature.setMaxResults(10);
 
-                connectGlasses("photo");
+                try {
+                    connectGlasses("photo");
+                }catch (Exception e){System.out.println(e.toString());}
                 callCloudVision(bitmap,feature);
 
             }
@@ -167,7 +169,10 @@ public class apiActivity extends AppCompatActivity {
                 api = visionAPI[4];
                 feature.setType(api);
                 feature.setMaxResults(10);
-                connectGlasses("photo");
+
+                try {
+                    connectGlasses("photo");
+                }catch (Exception e){System.out.println(e.toString());}
 
                 callCloudVision(bitmap,feature);
 
@@ -180,7 +185,10 @@ public class apiActivity extends AppCompatActivity {
                 api = visionAPI[1];
                 feature.setType(api);
                 feature.setMaxResults(10);
-                connectGlasses("photo");
+
+                try {
+                    connectGlasses("photo");
+                }catch (Exception e){System.out.println(e.toString());}
 
                 callCloudVision(bitmap,feature);
 
@@ -193,7 +201,10 @@ public class apiActivity extends AppCompatActivity {
                 api = visionAPI[0];
                 feature.setType(api);
                 feature.setMaxResults(10);
-                connectGlasses("photo");
+
+                try {
+                    connectGlasses("photo");
+                }catch (Exception e){System.out.println(e.toString());}
 
                 callCloudVision(bitmap,feature);
             }
@@ -205,7 +216,10 @@ public class apiActivity extends AppCompatActivity {
                 api = visionAPI[3];
                 feature.setType(api);
                 feature.setMaxResults(10);
-                connectGlasses("photo");
+
+                try {
+                    connectGlasses("photo");
+                }catch (Exception e){System.out.println(e.toString());}
 
                 callCloudVision(bitmap,feature);
 
@@ -218,7 +232,10 @@ public class apiActivity extends AppCompatActivity {
                 api = visionAPI[2];
                 feature.setType(api);
                 feature.setMaxResults(10);
-                connectGlasses("photo");
+
+                try {
+                    connectGlasses("photo");
+                }catch (Exception e){System.out.println(e.toString());}
 
                 callCloudVision(bitmap,feature);
 
