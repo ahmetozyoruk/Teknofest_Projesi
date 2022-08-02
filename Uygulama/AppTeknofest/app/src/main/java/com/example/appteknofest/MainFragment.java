@@ -19,10 +19,8 @@ public class MainFragment extends Fragment {
 
     ImageView cameraBtn;
     ImageView diagnosticBtn;
-    ImageView communicationBtn;
     ImageView deviceBtn;
     ImageView appBtn;
-    ImageView othersBtn;
 
     public MainFragment() {
 
@@ -47,10 +45,10 @@ public class MainFragment extends Fragment {
 
         cameraBtn =  view.findViewById(R.id.cameraIv);
         diagnosticBtn =  view.findViewById(R.id.diagnosticIv);
-        communicationBtn =  view.findViewById(R.id.communicationIv);
+
         deviceBtn =  view.findViewById(R.id.deviceSettingsIv);
         appBtn = view.findViewById(R.id.appSettingsIv);
-        othersBtn = view.findViewById(R.id.othersIv);
+
 
         cameraBtn.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -65,12 +63,7 @@ public class MainFragment extends Fragment {
                 startActivity(i);
             }
         });
-        communicationBtn.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                goToCommunicationFragment(view);
-            }
-        });
+
         deviceBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -80,31 +73,15 @@ public class MainFragment extends Fragment {
         appBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                goToAppSettingsFragment(view);
+                Navigation.findNavController(view).navigate(R.id.action_mainFragment_to_appSettingsFragment);
             }
         });
-        othersBtn.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                goToOthersFragment(view);
-            }
-        });
+
 
     }
-
     public void goToCameraFragment(View view){
         Navigation.findNavController(view)
                 .navigate(R.id.action_mainFragment_to_cameraFragment);
-    }
-
-    /*public void goToDiagnosticFragment(View view){
-        Navigation.findNavController(view)
-                .navigate(R.id.action_mainFragment_to_diagnosticFragment);
-    }*/
-
-    public void goToCommunicationFragment(View view){
-        Navigation.findNavController(view)
-                .navigate(R.id.action_mainFragment_to_communicationFragment);
     }
 
     public void goToDeviceSettingsFragment(View view){
@@ -112,13 +89,4 @@ public class MainFragment extends Fragment {
                 .navigate(R.id.action_mainFragment_to_deviceSettingsFragment);
     }
 
-    public void goToAppSettingsFragment(View view){
-        Navigation.findNavController(view)
-                .navigate(R.id.action_mainFragment_to_appSettingsFragment);
-    }
-
-    public void goToOthersFragment(View view){
-        Navigation.findNavController(view)
-                .navigate(R.id.action_mainFragment_to_othersFragment);
-    }
 }

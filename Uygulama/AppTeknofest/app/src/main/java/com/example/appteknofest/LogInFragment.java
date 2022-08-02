@@ -1,7 +1,6 @@
 package com.example.appteknofest;
 
 import android.os.Bundle;
-
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
@@ -27,7 +26,7 @@ public class LogInFragment extends Fragment {
     private ImageView back;
     private TextView loginEmail;
     private TextView loginPassword;
-    private FirebaseAuth mAuth;
+    FirebaseAuth mAuth;
 
     public LogInFragment() {
 
@@ -72,10 +71,8 @@ public class LogInFragment extends Fragment {
             String password = loginPassword.getText().toString();
 
             mAuth.signInWithEmailAndPassword(email,password)
-                    .addOnSuccessListener(authResult -> Navigation.findNavController(view)
-                            .navigate(R.id.action_logInFragment_to_mainFragment))
-                    .addOnFailureListener(e -> Toast.makeText(getActivity(),e.getLocalizedMessage().toString()
-                            ,Toast.LENGTH_LONG).show());
+                    .addOnSuccessListener(authResult -> Navigation.findNavController(view).navigate(R.id.action_logInFragment_to_mainFragment))
+                    .addOnFailureListener(e -> Toast.makeText(getActivity(),e.getLocalizedMessage().toString(),Toast.LENGTH_LONG).show());
 
 
     }

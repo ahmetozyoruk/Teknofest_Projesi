@@ -13,6 +13,7 @@ import android.content.pm.PackageManager;
 import android.database.Cursor;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
+import android.media.FaceDetector;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.provider.MediaStore;
@@ -36,6 +37,7 @@ import com.google.api.services.vision.v1.model.BatchAnnotateImagesResponse;
 import com.google.api.services.vision.v1.model.ColorInfo;
 import com.google.api.services.vision.v1.model.DominantColorsAnnotation;
 import com.google.api.services.vision.v1.model.EntityAnnotation;
+import com.google.api.services.vision.v1.model.FaceAnnotation;
 import com.google.api.services.vision.v1.model.Feature;
 import com.google.api.services.vision.v1.model.Image;
 import com.google.api.services.vision.v1.model.ImageProperties;
@@ -58,7 +60,7 @@ public class apiActivity extends AppCompatActivity {
     private ImageView detectLandmarkIv;
     private ImageView imagePropertiesIv;
     private ImageView detectExplicitContentIv;
-    private TextView tv;
+    private ImageView detectFaceIv;
     private TextToSpeech mTTS;
 
     private ActivityResultLauncher<String> permissionLauncher;
@@ -66,10 +68,9 @@ public class apiActivity extends AppCompatActivity {
     private Bitmap bitmap;
     Feature feature;
     public String api;
-    private String[] visionAPI = new String[]{"LANDMARK_DETECTION", "LOGO_DETECTION", "SAFE_SEARCH_DETECTION", "IMAGE_PROPERTIES", "LABEL_DETECTION","TEXT_DETECTION"};
+    private String[] visionAPI = new String[]{"LANDMARK_DETECTION", "LOGO_DETECTION", "SAFE_SEARCH_DETECTION", "IMAGE_PROPERTIES", "LABEL_DETECTION","TEXT_DETECTION","FACE_DETECTION"};
 
     private static final String CLOUD_VISION_API_KEY = "AIzaSyDzDtS2FC5wvNMDm3NFPy5lEPgK2-RDamk";
-
 
 
 
@@ -84,7 +85,8 @@ public class apiActivity extends AppCompatActivity {
         detectLandmarkIv = findViewById(R.id.detectLandmarkIv);
         imagePropertiesIv = findViewById(R.id.imagePropertiesIv);
         detectExplicitContentIv = findViewById(R.id.detectExplicitContentIv);
-        tv = findViewById(R.id.textView);
+        detectFaceIv = findViewById(R.id.faceDetectIv);
+
 
         mTTS = new TextToSpeech(this,i->{
            if (i==TextToSpeech.SUCCESS){
@@ -178,6 +180,17 @@ public class apiActivity extends AppCompatActivity {
 
                 callCloudVision(bitmap,feature);
 
+            }
+        });
+
+        detectFaceIv.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                api = visionAPI[6];
+                feature.setType(api);
+                feature.setMaxResults(10);
+
+                callCloudVision(bitmap,feature);
             }
         });
 
@@ -281,7 +294,7 @@ public class apiActivity extends AppCompatActivity {
             }
 
             protected void onPostExecute(String result) {
-                tv.setText(result);
+                System.out.println("result " + result);
                 speak(result);
             }
         }.execute();
@@ -310,6 +323,8 @@ public class apiActivity extends AppCompatActivity {
         List<EntityAnnotation> entityAnnotations;
         List<EntityAnnotation> entityAnnotationForText;
 
+
+
         String message = "";
         switch (api) {
             case "LANDMARK_DETECTION":
@@ -336,8 +351,21 @@ public class apiActivity extends AppCompatActivity {
             case "TEXT_DETECTION":
                 entityAnnotationForText = imageResponses.getTextAnnotations();
                 message = formatAnnotationForText(entityAnnotationForText);
+                break;
+
+            case "FACE_DETECTION":
+                List<FaceAnnotation> faceAnnotation = imageResponses.getFaceAnnotations();
+                message = getFaceAnnotation(faceAnnotation);
         }
         return message;
+    }
+
+    private String getFaceAnnotation(List<FaceAnnotation> faceAnnotation) {
+            return String.format("anger: %s%njoy: %s%nsurprise: %s%nposition: %s",
+                    faceAnnotation.get(0).getAngerLikelihood(),
+                    faceAnnotation.get(0).getJoyLikelihood(),
+                    faceAnnotation.get(0).getSurpriseLikelihood(),
+                    faceAnnotation.get(0).getBoundingPoly());
     }
 
 

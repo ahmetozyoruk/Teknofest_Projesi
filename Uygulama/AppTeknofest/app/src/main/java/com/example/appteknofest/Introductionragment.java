@@ -53,7 +53,6 @@ public class Introductionragment extends Fragment {
     // go to login fragment
     public void goToLoginFragment(View view){
 
-
         //pass data between destinations with bundle
         //to find out where the login fragment came from
 
@@ -64,13 +63,11 @@ public class Introductionragment extends Fragment {
         Navigation.findNavController(view)
                 .navigate(R.id.action_introductionragment_to_logInFragment,bundle);
 
-
     }
     // go to register fragment
     public void goToRegisterFragment(View view){
         Navigation.findNavController(view)
                 .navigate(R.id.action_introductionragment_to_registerFragment);
     }
-
 
 }
