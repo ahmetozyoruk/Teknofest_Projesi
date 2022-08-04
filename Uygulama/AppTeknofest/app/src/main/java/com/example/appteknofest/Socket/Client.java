@@ -45,7 +45,7 @@ public class Client implements Runnable
     {
         toDoJob = toDoJob;
 //        host_address="192.254.162.34";
-        host_address="192.168.1.116";
+        host_address="192.168.189.30";
         this.mContext = context;
         this.thread = new Thread( this );
         this.thread.setPriority( Thread.NORM_PRIORITY );

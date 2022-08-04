@@ -13,6 +13,7 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.example.appteknofest.Socket.Client;
+import com.example.appteknofest.Utilities.ColorUtils;
 import com.google.api.client.extensions.android.http.AndroidHttp;
 import com.google.api.client.googleapis.json.GoogleJsonResponseException;
 import com.google.api.client.http.HttpTransport;
@@ -396,11 +397,17 @@ public class apiActivity extends AppCompatActivity {
     }
 
     private String getImageProperty(ImageProperties imageProperties) {
+        ColorUtils colorpicker = new ColorUtils();
         String message = "";
         DominantColorsAnnotation colors = imageProperties.getDominantColors();
         for (ColorInfo color : colors.getColors()) {
-            message = message + "" + color.getPixelFraction() + " - " + color.getColor().getRed() + " - " + color.getColor().getGreen() + " - " + color.getColor().getBlue();
-            message = message + "\n";
+            int red = Math.round(color.getColor().getRed());
+            int blue = Math.round(color.getColor().getBlue());
+            int green = Math.round(color.getColor().getGreen());
+            String closestColor = colorpicker.getColorNameFromRgb(red,green,blue);
+            message = message + closestColor + "\n";
+            //message = message + "" + color.getPixelFraction() + " - " + color.getColor().getRed() + " - " + color.getColor().getGreen() + " - " + color.getColor().getBlue();
+            // message = message + "\n";
         }
         return message;
     }
