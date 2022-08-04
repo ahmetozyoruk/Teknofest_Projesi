@@ -1,28 +1,21 @@
 package com.example.appteknofest;
 
-import androidx.activity.result.ActivityResultCallback;
 import androidx.activity.result.ActivityResultLauncher;
-import androidx.activity.result.contract.ActivityResultContracts;
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
-import androidx.core.content.ContextCompat;
 
-import android.Manifest;
-import android.annotation.SuppressLint;
-import android.content.pm.PackageManager;
-import android.database.Cursor;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.media.FaceDetector;
 import android.os.AsyncTask;
 import android.os.Bundle;
-import android.provider.MediaStore;
 import android.speech.tts.TextToSpeech;
-import android.util.Log;
 import android.view.View;
 import android.widget.ImageView;
 import android.widget.TextView;
 
+import com.example.appteknofest.Socket.Client;
+import com.example.appteknofest.Utilities.ColorUtils;
 import com.google.api.client.extensions.android.http.AndroidHttp;
 import com.google.api.client.googleapis.json.GoogleJsonResponseException;
 import com.google.api.client.http.HttpTransport;
@@ -43,14 +36,12 @@ import com.google.api.services.vision.v1.model.Image;
 import com.google.api.services.vision.v1.model.ImageProperties;
 import com.google.api.services.vision.v1.model.SafeSearchAnnotation;
 
-import org.w3c.dom.Text;
-
 import java.io.ByteArrayOutputStream;
-import java.io.File;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Locale;
+import android.os.Handler;
 
 public class apiActivity extends AppCompatActivity {
 
@@ -65,8 +56,11 @@ public class apiActivity extends AppCompatActivity {
 
     private ActivityResultLauncher<String> permissionLauncher;
 
-    private Bitmap bitmap;
+    Bitmap bitmap;
     Feature feature;
+    private Client client;
+    Handler handler = new Handler();
+
     public String api;
     private String[] visionAPI = new String[]{"LANDMARK_DETECTION", "LOGO_DETECTION", "SAFE_SEARCH_DETECTION", "IMAGE_PROPERTIES", "LABEL_DETECTION","TEXT_DETECTION","FACE_DETECTION"};
 
@@ -88,29 +82,75 @@ public class apiActivity extends AppCompatActivity {
         detectFaceIv = findViewById(R.id.faceDetectIv);
 
 
-        mTTS = new TextToSpeech(this,i->{
-           if (i==TextToSpeech.SUCCESS){
-               int result = mTTS.setLanguage(Locale.ENGLISH);
 
-               if (result == TextToSpeech.LANG_MISSING_DATA
-                    || result == TextToSpeech.LANG_NOT_SUPPORTED){
-                   System.out.println("TTS language not supported");
-               }
-           }else{
-               System.out.println("Initialization failed");
-           }
+//        permissionLauncher = registerForActivityResult(new ActivityResultContracts.RequestPermission()
+//                , new ActivityResultCallback<Boolean>() {
+//                    @Override
+//                    public void onActivityResult(Boolean result) {
+//                        if (result){
+//                            String[] projection = new String[]{
+//                                    MediaStore.Images.ImageColumns._ID,
+//                                    MediaStore.Images.ImageColumns.DATA,
+//                                    MediaStore.Images.ImageColumns.BUCKET_DISPLAY_NAME,
+//                                    MediaStore.Images.ImageColumns.DATE_TAKEN,
+//                                    MediaStore.Images.ImageColumns.MIME_TYPE
+//                            };
+//                            final Cursor cursor = getContentResolver()
+//                                    .query(MediaStore.Images.Media.EXTERNAL_CONTENT_URI, projection, null,
+//                                            null, MediaStore.Images.ImageColumns.DATE_TAKEN + " DESC");
+//
+//                            // Put it in the image view
+//                            if (cursor.moveToFirst()) {
+//                                final ImageView imageView = (ImageView) findViewById(R.id.imageView);
+//                                String imageLocation = cursor.getString(1);
+//                                File imageFile = new File(imageLocation);
+//                                if (imageFile.exists()) {   // TODO: is there a better way to do this?
+//                                    bitmap = BitmapFactory.decodeFile(imageLocation);
+//                                    System.out.println("bitmap" + bitmap);
+//
+//                                }
+//                            }
+//                        }
+//                    }
+//                });
+//
+//
+//
+//        if (ContextCompat.checkSelfPermission(this,Manifest.permission
+//                .READ_EXTERNAL_STORAGE)!=PackageManager.PERMISSION_GRANTED){
+//            handler.postDelayed(new Runnable() {
+//                @Override
+//                public void run() {
+//                    connectGlasses("photo");
+//
+//                }
+//            }, 5000);
+//            permissionLauncher.launch(Manifest.permission.READ_EXTERNAL_STORAGE);
+//        }else{
+//            handler.postDelayed(new Runnable() {
+//                @Override
+//                public void run() {
+//                    connectGlasses("photo");
+//
+//                }
+//            }, 5000);
+//            getLastPicture();
+//        }
+
+        mTTS = new TextToSpeech(this,i->{
+            if (i==TextToSpeech.SUCCESS){
+                int result = mTTS.setLanguage(Locale.ENGLISH);
+
+                if (result == TextToSpeech.LANG_MISSING_DATA
+                        || result == TextToSpeech.LANG_NOT_SUPPORTED){
+                    System.out.println("TTS language not supported");
+                }
+            }else{
+                System.out.println("Initialization failed");
+            }
         });
 
         feature = new Feature();
-
-        registerLauncher();
-
-        if (ContextCompat.checkSelfPermission(this,Manifest.permission.READ_EXTERNAL_STORAGE)
-                != PackageManager.PERMISSION_GRANTED){
-            registerLauncher();
-        }else{
-            getLastPicture();
-        }
 
         textRecognitionIv.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -119,6 +159,9 @@ public class apiActivity extends AppCompatActivity {
                 feature.setType(api);
                 //feature.setMaxResults(10);
 
+                try {
+                    connectGlasses("photo");
+                }catch (Exception e){System.out.println(e.toString());}
                 callCloudVision(bitmap,feature);
 
             }
@@ -130,6 +173,10 @@ public class apiActivity extends AppCompatActivity {
                 api = visionAPI[4];
                 feature.setType(api);
                 feature.setMaxResults(10);
+
+                try {
+                    connectGlasses("photo");
+                }catch (Exception e){System.out.println(e.toString());}
 
                 callCloudVision(bitmap,feature);
 
@@ -143,6 +190,10 @@ public class apiActivity extends AppCompatActivity {
                 feature.setType(api);
                 feature.setMaxResults(10);
 
+                try {
+                    connectGlasses("photo");
+                }catch (Exception e){System.out.println(e.toString());}
+
                 callCloudVision(bitmap,feature);
 
             }
@@ -155,6 +206,10 @@ public class apiActivity extends AppCompatActivity {
                 feature.setType(api);
                 feature.setMaxResults(10);
 
+                try {
+                    connectGlasses("photo");
+                }catch (Exception e){System.out.println(e.toString());}
+
                 callCloudVision(bitmap,feature);
             }
         });
@@ -165,6 +220,10 @@ public class apiActivity extends AppCompatActivity {
                 api = visionAPI[3];
                 feature.setType(api);
                 feature.setMaxResults(10);
+
+                try {
+                    connectGlasses("photo");
+                }catch (Exception e){System.out.println(e.toString());}
 
                 callCloudVision(bitmap,feature);
 
@@ -177,6 +236,10 @@ public class apiActivity extends AppCompatActivity {
                 api = visionAPI[2];
                 feature.setType(api);
                 feature.setMaxResults(10);
+
+                try {
+                    connectGlasses("photo");
+                }catch (Exception e){System.out.println(e.toString());}
 
                 callCloudVision(bitmap,feature);
 
@@ -197,49 +260,34 @@ public class apiActivity extends AppCompatActivity {
 
     }
 
-    private void registerLauncher(){
-        permissionLauncher = registerForActivityResult(new ActivityResultContracts.RequestPermission()
-                , new ActivityResultCallback<Boolean>() {
-                    @Override
-                    public void onActivityResult(Boolean result) {
-                        if (result){
-                            getLastPicture();
-                        }
-                    }
-                });
-    }
-
-    private void getLastPicture(){
-        // Find the last picture
-        String[] projection = new String[]{
-                MediaStore.Images.ImageColumns._ID,
-                MediaStore.Images.ImageColumns.DATA,
-                MediaStore.Images.ImageColumns.BUCKET_DISPLAY_NAME,
-                MediaStore.Images.ImageColumns.DATE_TAKEN,
-                MediaStore.Images.ImageColumns.MIME_TYPE
-        };
-        final Cursor cursor = getApplicationContext().getContentResolver()
-                .query(MediaStore.Images.Media.EXTERNAL_CONTENT_URI, projection, null,
-                        null, MediaStore.Images.ImageColumns.DATE_TAKEN + " DESC");
-
-        // adjust bitmap for using in callCloudVision method
-        if (cursor.moveToFirst()) {
-            String imageLocation = cursor.getString(1);
-            File imageFile = new File(imageLocation);
-            if (imageFile.exists()) {
-                bitmap = BitmapFactory.decodeFile(imageLocation);
-                System.out.println("bitmap  : " + bitmap);
-            }
-        }
-    }
+//    private void getLastPicture(){
+//        // Find the last picture
+//        String[] projection = new String[]{
+//                MediaStore.Images.ImageColumns._ID,
+//                MediaStore.Images.ImageColumns.DATA,
+//                MediaStore.Images.ImageColumns.BUCKET_DISPLAY_NAME,
+//                MediaStore.Images.ImageColumns.DATE_TAKEN,
+//                MediaStore.Images.ImageColumns.MIME_TYPE
+//        };
+//        final Cursor cursor = getApplicationContext().getContentResolver()
+//                .query(MediaStore.Images.Media.EXTERNAL_CONTENT_URI, projection, null,
+//                        null, MediaStore.Images.ImageColumns.DATE_TAKEN + " DESC");
+//
+//        // adjust bitmap for using in callCloudVision method
+//        if (cursor.moveToFirst()) {
+//            String imageLocation = cursor.getString(1);
+//            File imageFile = new File(imageLocation);
+//            if (imageFile.exists()) {
+//                bitmap = (Bitmap) BitmapFactory.decodeFile(imageLocation);
+//                System.out.println("bitmap  : " + bitmap);
+//            }
+//        }
+//    }
 
 
     private void speak(String result){
         mTTS.speak(result,TextToSpeech.QUEUE_FLUSH,null);
     }
-
-
-
 
     private void callCloudVision(final Bitmap bitmap, final Feature feature) {
         final List<Feature> featureList = new ArrayList<>();
@@ -378,11 +426,17 @@ public class apiActivity extends AppCompatActivity {
     }
 
     private String getImageProperty(ImageProperties imageProperties) {
+        ColorUtils colorpicker = new ColorUtils();
         String message = "";
         DominantColorsAnnotation colors = imageProperties.getDominantColors();
         for (ColorInfo color : colors.getColors()) {
-            message = message + "" + color.getPixelFraction() + " - " + color.getColor().getRed() + " - " + color.getColor().getGreen() + " - " + color.getColor().getBlue();
-            message = message + "\n";
+            int red = Math.round(color.getColor().getRed());
+            int blue = Math.round(color.getColor().getBlue());
+            int green = Math.round(color.getColor().getGreen());
+            String closestColor = colorpicker.getColorNameFromRgb(red,green,blue);
+            message = message + closestColor + "\n";
+            //message = message + "" + color.getPixelFraction() + " - " + color.getColor().getRed() + " - " + color.getColor().getGreen() + " - " + color.getColor().getBlue();
+            // message = message + "\n";
         }
         return message;
     }
@@ -411,6 +465,17 @@ public class apiActivity extends AppCompatActivity {
             }
         }
         return message;
+    }
+
+    public void connectGlasses(String toDoJob)
+    {
+        Client conn = new Client(getApplicationContext(), toDoJob);
+        try {
+            Thread.sleep(4000);
+        } catch (InterruptedException e) {
+            e.printStackTrace();
+        }
+        bitmap = conn.bm;
     }
 
     @Override

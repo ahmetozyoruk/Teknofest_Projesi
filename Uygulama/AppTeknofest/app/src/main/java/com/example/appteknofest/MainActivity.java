@@ -27,6 +27,7 @@ import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.example.appteknofest.Socket.Client;
 import com.example.appteknofest.Socket.Server;
 import com.google.api.client.extensions.android.http.AndroidHttp;
 import com.google.api.client.googleapis.json.GoogleJsonResponseException;
@@ -59,6 +60,7 @@ public class MainActivity extends AppCompatActivity implements APManager.OnSucce
     private Server server;
     private FirebaseAuth auth;
     private FirebaseUser user;
+//    private Server server;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -94,7 +96,11 @@ public class MainActivity extends AppCompatActivity implements APManager.OnSucce
 
         navController.setGraph(graph);
 
+//        this.server = new Server(getApplicationContext());
+//        this.client = new Client(getApplicationContext(),"photo");
     }
+
+
 
     @Override
     public void onSuccess(@NonNull String ssid, @NonNull String password) {
