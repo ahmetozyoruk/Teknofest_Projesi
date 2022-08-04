@@ -369,7 +369,6 @@ public class apiActivity extends AppCompatActivity {
         AnnotateImageResponse imageResponses = response.getResponses().get(0);
 
         List<EntityAnnotation> entityAnnotations;
-        List<EntityAnnotation> entityAnnotationForText;
 
 
 
@@ -397,8 +396,8 @@ public class apiActivity extends AppCompatActivity {
                 break;
 
             case "TEXT_DETECTION":
-                entityAnnotationForText = imageResponses.getTextAnnotations();
-                message = formatAnnotationForText(entityAnnotationForText);
+                entityAnnotations = imageResponses.getTextAnnotations();
+                message = formatAnnotation(entityAnnotations);
                 break;
 
             case "FACE_DETECTION":
@@ -446,23 +445,12 @@ public class apiActivity extends AppCompatActivity {
 
         if (entityAnnotation != null) {
             for (EntityAnnotation entity : entityAnnotation) {
-                message = message + "    " + entity.getDescription() + " " + entity.getScore();
+                message = message + entity.getDescription();
                 message += "\n";
+                System.out.println(entity.getDescription());
             }
         } else {
             message = "Nothing Found";
-        }
-        return message;
-    }
-
-    private String formatAnnotationForText(List<EntityAnnotation> entityAnnotation){
-        String message = "";
-
-        if (entityAnnotation != null) {
-
-            for (EntityAnnotation entity : entityAnnotation) {
-                message = entity.getDescription() ;
-            }
         }
         return message;
     }
