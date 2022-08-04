@@ -47,12 +47,11 @@ public class brightnessFragment extends Fragment {
 
 
         seekBar = view.findViewById(R.id.seekBar);
-        textView =view.findViewById(R.id.screenBrightnessTv);
 
         int cBrightness = Settings.System.getInt(getContext().getContentResolver()
                 ,Settings.System.SCREEN_BRIGHTNESS,0);
 
-        textView.setText(cBrightness+"/255");
+
         seekBar.setProgress(cBrightness);
 
 
@@ -64,7 +63,7 @@ public class brightnessFragment extends Fragment {
                     boolean canWrite = Settings.System.canWrite(context);
                     if (canWrite){
                         int sBrightness = i*255/255;
-                        textView.setText(sBrightness+"/255");
+
                         Settings.System.putInt(context.getContentResolver()
                                 ,Settings.System.SCREEN_BRIGHTNESS_MODE
                                 ,Settings.System.SCREEN_BRIGHTNESS_MODE_MANUAL);

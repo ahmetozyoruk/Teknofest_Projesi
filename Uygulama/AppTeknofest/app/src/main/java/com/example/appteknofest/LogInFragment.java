@@ -22,7 +22,6 @@ import com.google.firebase.auth.FirebaseAuth;
 public class LogInFragment extends Fragment {
 
     private Button login;
-    private TextView loginTv;
     private ImageView back;
     private TextView loginEmail;
     private TextView loginPassword;
@@ -45,7 +44,7 @@ public class LogInFragment extends Fragment {
     @Override
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
-        loginTv =   view.findViewById(R.id.loginTv);
+
         login = (Button) view.findViewById(R.id.login);
         back = (ImageView) view.findViewById(R.id.backForLoginIv);
         loginEmail =  view.findViewById(R.id.loginEmail);

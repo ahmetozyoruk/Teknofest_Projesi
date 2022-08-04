@@ -19,7 +19,8 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
         app:srcCompat="@mipmap/writingicon"
-        tools:src="@tools:sample/avatars" />
+        tools:src="@tools:sample/avatars"
+        android:contentDescription="Yazı Tanıma"/>
 
     <ImageView
         android:id="@+id/objectDiagnosticIv"
@@ -33,7 +34,8 @@
         app:layout_constraintStart_toEndOf="@+id/writingDiagnosticIv"
         app:layout_constraintTop_toTopOf="parent"
         app:srcCompat="@mipmap/objecticon"
-        tools:src="@drawable/appsetings_background" />
+        tools:src="@drawable/appsetings_background"
+        android:contentDescription="Nesne Tanıma"/>
 
     <ImageView
         android:id="@+id/imagePropertiesIv"
@@ -46,7 +48,8 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/writingDiagnosticIv"
         app:srcCompat="@mipmap/propertyimage"
-        tools:src="@tools:sample/avatars" />
+        tools:src="@tools:sample/avatars"
+        android:contentDescription="Renk Tanımı"/>
 
     <ImageView
         android:id="@+id/detectLogoIv"
@@ -60,19 +63,23 @@
         app:layout_constraintEnd_toStartOf="@+id/faceDetectIv"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/writingDiagnosticIv"
-        tools:srcCompat="@mipmap/logo" />
+        app:srcCompat="@mipmap/logo"
+        tools:srcCompat="@mipmap/logo"
+        android:contentDescription="Logo Tanıma"/>
 
     <ImageView
         android:id="@+id/detectLandmarkIv"
         android:layout_width="0dp"
         android:layout_height="76dp"
         android:layout_marginEnd="81dp"
+        android:contentDescription="Yer Tanıma"
         android:src="@drawable/appsetings_background"
         app:layout_constraintBottom_toTopOf="@+id/faceDetectIv"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toEndOf="@+id/imagePropertiesIv"
         app:layout_constraintTop_toBottomOf="@+id/objectDiagnosticIv"
-        tools:srcCompat="@mipmap/landmark" />
+        app:srcCompat="@mipmap/landmark"
+        tools:srcCompat="@mipmap/landmark_round" />
 
     <ImageView
         android:id="@+id/detectExplicitContentIv"
@@ -83,7 +90,8 @@
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/detectLogoIv" />
+        app:layout_constraintTop_toBottomOf="@+id/detectLogoIv"
+        android:contentDescription="YetiŞkin İçerik kontrolü"/>
 
     <ImageView
         android:id="@+id/faceDetectIv"
@@ -95,7 +103,9 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toEndOf="@+id/detectLogoIv"
         app:layout_constraintTop_toBottomOf="@+id/objectDiagnosticIv"
-        app:srcCompat="@mipmap/face_foreground" />
+        app:srcCompat="@mipmap/face_foreground"
+        tools:srcCompat="@mipmap/face_foreground"
+        android:contentDescription="Duygu Tanıma"/>
 
 
 </androidx.constraintlayout.widget.ConstraintLayout>

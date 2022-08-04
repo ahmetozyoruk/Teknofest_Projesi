@@ -17,7 +17,8 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="@+id/glassesIv"
         app:srcCompat="@mipmap/distance_foreground"
-        tools:src="@tools:sample/avatars" />
+        tools:src="@tools:sample/avatars"
+        android:contentDescription="Uzaklık Ayarları"/>
 
     <ImageView
         android:id="@+id/glassesIv"
@@ -30,6 +31,7 @@
         app:layout_constraintStart_toEndOf="@+id/distanceIv"
         app:layout_constraintTop_toTopOf="parent"
         app:srcCompat="@mipmap/glasses_foreground"
-        tools:src="@tools:sample/avatars" />
+        tools:src="@tools:sample/avatars"
+        android:contentDescription="Gözlük Bağlantıları"/>
 
 </androidx.constraintlayout.widget.ConstraintLayout>

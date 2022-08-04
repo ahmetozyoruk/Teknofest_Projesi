@@ -20,20 +20,10 @@
             android:id="@+id/seekBar"
             android:max="255"
             android:progress="20"
-            android:indeterminate="false"/>
+            android:indeterminate="false"
+            android:contentDescription="Ekran Parlalklığı"/>
 
 
     </LinearLayout>
-
-    <TextView
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:id="@+id/screenBrightnessTv"
-        android:text="/255"
-        android:textSize="10dp"
-        android:gravity="end"
-        android:layout_marginTop="10dp">
-
-    </TextView>
 
 </LinearLayout>

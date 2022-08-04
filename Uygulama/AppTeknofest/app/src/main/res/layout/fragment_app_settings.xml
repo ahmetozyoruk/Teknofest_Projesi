@@ -18,7 +18,8 @@
         app:layout_constraintTop_toTopOf="parent"
         app:srcCompat="@mipmap/sign_out"
         tools:src="@tools:sample/avatars"
-        tools:srcCompat="@mipmap/sign_out" />
+        tools:srcCompat="@mipmap/sign_out"
+        android:contentDescription="Çıkış Yap"/>
 
     <ImageView
         android:id="@+id/brightnessIv"
@@ -30,6 +31,7 @@
         app:layout_constraintStart_toEndOf="@+id/sign_out_iv"
         app:layout_constraintTop_toTopOf="@+id/sign_out_iv"
         app:srcCompat="@mipmap/screenbrightness_foreground"
-        tools:src="@tools:sample/avatars" />
+        tools:src="@tools:sample/avatars"
+        android:contentDescription="Ekran Parlaklığı Ayarı"/>
 
 </androidx.constraintlayout.widget.ConstraintLayout>
