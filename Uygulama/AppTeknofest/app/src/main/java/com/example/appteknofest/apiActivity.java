@@ -253,6 +253,10 @@ public class apiActivity extends AppCompatActivity {
                 feature.setType(api);
                 feature.setMaxResults(10);
 
+                try {
+                    connectGlasses("photo");
+                }catch (Exception e){System.out.println(e.toString());}
+
                 callCloudVision(bitmap,feature);
             }
         });
