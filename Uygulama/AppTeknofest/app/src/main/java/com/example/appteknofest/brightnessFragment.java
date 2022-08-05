@@ -71,8 +71,8 @@ public class brightnessFragment extends Fragment {
                         Settings.System.putInt(context.getContentResolver()
                                 ,Settings.System.SCREEN_BRIGHTNESS,sBrightness);
                     }else{
-                        Intent intent = new Intent(Settings.ACTION_MANAGE_WRITE_SETTINGS);
-                        context.startActivity(intent);
+                        Intent intents = new Intent(Settings.ACTION_MANAGE_WRITE_SETTINGS);
+                        startActivity(intents);
                     }
                 }
             }

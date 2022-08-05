@@ -412,11 +412,10 @@ public class apiActivity extends AppCompatActivity {
     }
 
     private String getFaceAnnotation(List<FaceAnnotation> faceAnnotation) {
-            return String.format("anger: %s%njoy: %s%nsurprise: %s%nposition: %s",
+            return String.format("anger: %s%njoy: %s%nsurprise: %s",
                     faceAnnotation.get(0).getAngerLikelihood(),
                     faceAnnotation.get(0).getJoyLikelihood(),
-                    faceAnnotation.get(0).getSurpriseLikelihood(),
-                    faceAnnotation.get(0).getBoundingPoly());
+                    faceAnnotation.get(0).getSurpriseLikelihood());
     }
 
 
