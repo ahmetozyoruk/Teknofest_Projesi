@@ -10,51 +10,28 @@
         android:id="@+id/distanceIv"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginTop="88dp"
-        android:layout_marginEnd="15dp"
-        android:background="@drawable/image_border"
-        app:layout_constraintEnd_toStartOf="@+id/volumeIv"
+        android:layout_marginEnd="11dp"
+        android:background="@drawable/icon_background"
+        app:layout_constraintBottom_toBottomOf="@+id/glassesIv"
+        app:layout_constraintEnd_toStartOf="@+id/glassesIv"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintTop_toTopOf="@+id/glassesIv"
         app:srcCompat="@mipmap/distance_foreground"
-        tools:src="@tools:sample/avatars" />
-
-    <ImageView
-        android:id="@+id/volumeIv"
-        android:layout_width="95dp"
-        android:layout_height="101dp"
-        android:layout_marginTop="79dp"
-        android:layout_marginEnd="2dp"
-        android:background="@drawable/image_border"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toEndOf="@+id/distanceIv"
-        app:layout_constraintTop_toTopOf="parent"
-        app:srcCompat="@drawable/volume"
-        tools:src="@tools:sample/avatars" />
+        tools:src="@tools:sample/avatars"
+        android:contentDescription="Uzaklık Ayarları"/>
 
     <ImageView
         android:id="@+id/glassesIv"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginEnd="15dp"
-        android:layout_marginBottom="161dp"
-        android:background="@drawable/image_border"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toStartOf="@+id/bluetoothIv"
-        app:layout_constraintStart_toStartOf="parent"
-        app:srcCompat="@mipmap/glasses_foreground"
-        tools:src="@tools:sample/avatars" />
-
-    <ImageView
-        android:id="@+id/bluetoothIv"
-        android:layout_width="100dp"
-        android:layout_height="113dp"
-        android:layout_marginEnd="2dp"
-        android:layout_marginBottom="19dp"
-        android:background="@drawable/image_border"
-        app:layout_constraintBottom_toBottomOf="@+id/glassesIv"
+        android:layout_marginTop="143dp"
+        android:layout_marginEnd="13dp"
+        android:background="@drawable/icon_background"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toEndOf="@+id/glassesIv"
-        app:srcCompat="@drawable/bluetooth"
-        tools:src="@tools:sample/avatars" />
+        app:layout_constraintStart_toEndOf="@+id/distanceIv"
+        app:layout_constraintTop_toTopOf="parent"
+        app:srcCompat="@mipmap/glasses_foreground"
+        tools:src="@tools:sample/avatars"
+        android:contentDescription="Gözlük Bağlantıları"/>
+
 </androidx.constraintlayout.widget.ConstraintLayout>

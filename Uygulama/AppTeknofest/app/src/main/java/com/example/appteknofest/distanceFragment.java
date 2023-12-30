@@ -9,7 +9,8 @@ import android.view.View;
 import android.view.ViewGroup;
 
 
-public class communicationFragment extends Fragment {
+public class distanceFragment extends Fragment {
+
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -20,6 +21,6 @@ public class communicationFragment extends Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
-        return inflater.inflate(R.layout.fragment_communication, container, false);
+        return inflater.inflate(R.layout.fragment_distance, container, false);
     }
 }

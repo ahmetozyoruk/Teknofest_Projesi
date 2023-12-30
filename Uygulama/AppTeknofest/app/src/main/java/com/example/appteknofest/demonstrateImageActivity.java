@@ -44,19 +44,10 @@ public class demonstrateImageActivity extends AppCompatActivity {
     ImageView demonstrateImageIv;
     Button pickImageBtn;
 
-    /* ImageDatabase db;
-    ImageDao imageDao;
-    Image img;
-    */
+
     private final CompositeDisposable compositeDisposable = new CompositeDisposable();
 
     private static final int CAMERA_PERMISSION_CODE = 100;
-    /*private CompositeDisposable compositeDisposable = new CompositeDisposable();*/
-
-
-
-    /* ActivityResultLauncher<Intent> activityResultLauncher;
-    ActivityResultLauncher<String> permissionLauncher;*/
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -66,14 +57,6 @@ public class demonstrateImageActivity extends AppCompatActivity {
 
         demonstrateImageIv = findViewById(R.id.demonstrateImageIv);
         pickImageBtn = findViewById(R.id.pickPhotoBtn);
-
-       /* db = Room.databaseBuilder(getApplicationContext(),
-                ImageDatabase.class,"imageDatabase")
-                //.allowMainThreadQueries()
-                .build();
-
-        imageDao = db.imageDao();
-*/
 
         pickImageBtn.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -92,17 +75,8 @@ public class demonstrateImageActivity extends AppCompatActivity {
                         }
                     }
                 }).start();
-
-
             }
         });
-
-
-
-
-
-
-
     }
 
 
@@ -132,28 +106,9 @@ public class demonstrateImageActivity extends AppCompatActivity {
         if (requestCode==CAMERA_PERMISSION_CODE && resultCode == Activity.RESULT_OK){
             Bitmap photo = (Bitmap) data.getExtras().get("data");
 
-            // take a bitmap
 
-
-
-            /*
-            ByteArrayOutputStream stream = new ByteArrayOutputStream();
-            photo.compress(Bitmap.CompressFormat.JPEG,70,stream);
-            byte[] bArray = stream.toByteArray();
-            img = new Image(bArray);*/
-
-            //imageDao.insert(img);
-
-            /*System.out.println(imageDao.getImage(1).bArr);
-            System.out.println(imageDao.getAll());*/
             demonstrateImageIv.setImageBitmap(photo);
         }
     }
-
-
-
-
-
-
 
 }

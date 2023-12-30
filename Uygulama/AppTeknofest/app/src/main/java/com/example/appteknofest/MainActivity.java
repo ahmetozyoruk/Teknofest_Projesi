@@ -4,7 +4,12 @@ import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.app.ActivityCompat;
 import androidx.core.content.ContextCompat;
+import androidx.navigation.NavController;
+import androidx.navigation.NavGraph;
+import androidx.navigation.NavHost;
+import androidx.navigation.NavInflater;
 import androidx.navigation.Navigation;
+import androidx.navigation.fragment.NavHostFragment;
 
 import android.Manifest;
 import android.annotation.SuppressLint;
@@ -22,6 +27,7 @@ import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.example.appteknofest.Socket.Client;
 import com.example.appteknofest.Socket.Server;
 import com.google.api.client.extensions.android.http.AndroidHttp;
 import com.google.api.client.googleapis.json.GoogleJsonResponseException;
@@ -41,6 +47,8 @@ import com.google.api.services.vision.v1.model.Feature;
 import com.google.api.services.vision.v1.model.Image;
 import com.google.api.services.vision.v1.model.ImageProperties;
 import com.google.api.services.vision.v1.model.SafeSearchAnnotation;
+import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.auth.FirebaseUser;
 
 import java.io.ByteArrayOutputStream;
 import java.io.IOException;
@@ -50,6 +58,9 @@ import java.util.List;
 public class MainActivity extends AppCompatActivity implements APManager.OnSuccessListener  {
 
     private Server server;
+    private FirebaseAuth auth;
+    private FirebaseUser user;
+//    private Server server;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -66,7 +77,30 @@ public class MainActivity extends AppCompatActivity implements APManager.OnSucce
 //        });
 
         this.server = new Server(getApplicationContext());
+        auth = FirebaseAuth.getInstance();
+        user = auth.getCurrentUser();
+
+
+        NavHostFragment navHostFragment = (NavHostFragment) getSupportFragmentManager().findFragmentById(R.id.fragmentContainerView);
+        NavController  navController = navHostFragment.getNavController();
+
+        NavInflater navInflater = navController.getNavInflater();
+        NavGraph graph = navInflater.inflate(R.navigation.my_graph);
+
+
+        if (user!=null){
+            graph.setStartDestination(R.id.mainFragment);
+        }else{
+            graph.setStartDestination(R.id.introductionragment);
+        }
+
+        navController.setGraph(graph);
+
+//        this.server = new Server(getApplicationContext());
+//        this.client = new Client(getApplicationContext(),"photo");
     }
+
+
 
     @Override
     public void onSuccess(@NonNull String ssid, @NonNull String password) {

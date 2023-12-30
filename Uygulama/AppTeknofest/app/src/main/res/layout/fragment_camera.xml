@@ -9,38 +9,25 @@
     <ImageView
         android:id="@+id/recordIv"
         android:layout_width="0dp"
-        android:layout_height="0dp"
-        android:layout_marginTop="82dp"
-        android:layout_marginEnd="65dp"
-        android:layout_marginBottom="94dp"
-        app:layout_constraintBottom_toTopOf="@+id/galleryIv"
+        android:layout_height="102dp"
+        android:layout_marginTop="162dp"
+        android:layout_marginEnd="70dp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toEndOf="@+id/imageIv"
         app:layout_constraintTop_toTopOf="parent"
-        app:srcCompat="@mipmap/recordicon" />
+        app:srcCompat="@mipmap/recordicon"/>
 
     <ImageView
         android:id="@+id/imageIv"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="51dp"
-        android:layout_marginTop="82dp"
-        android:layout_marginEnd="116dp"
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        android:layout_marginStart="44dp"
+        android:layout_marginEnd="37dp"
+        app:layout_constraintBottom_toBottomOf="@+id/recordIv"
         app:layout_constraintEnd_toStartOf="@+id/recordIv"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintTop_toTopOf="@+id/recordIv"
         app:srcCompat="@mipmap/imageicon"
-        tools:src="@tools:sample/avatars" />
+        tools:src="@tools:sample/avatars"/>
 
-    <ImageView
-        android:id="@+id/galleryIv"
-        android:layout_width="112dp"
-        android:layout_height="0dp"
-        android:layout_marginBottom="256dp"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/recordIv"
-        app:srcCompat="@mipmap/gallery"
-        tools:src="@mipmap/gallery" />
 </androidx.constraintlayout.widget.ConstraintLayout>

@@ -1,7 +1,6 @@
 package com.example.appteknofest;
 
 import android.os.Bundle;
-
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
@@ -23,11 +22,10 @@ import com.google.firebase.auth.FirebaseAuth;
 public class LogInFragment extends Fragment {
 
     private Button login;
-    private TextView loginTv;
     private ImageView back;
     private TextView loginEmail;
     private TextView loginPassword;
-    private FirebaseAuth mAuth;
+    FirebaseAuth mAuth;
 
     public LogInFragment() {
 
@@ -46,7 +44,7 @@ public class LogInFragment extends Fragment {
     @Override
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
-        loginTv =   view.findViewById(R.id.loginTv);
+
         login = (Button) view.findViewById(R.id.login);
         back = (ImageView) view.findViewById(R.id.backForLoginIv);
         loginEmail =  view.findViewById(R.id.loginEmail);
@@ -72,10 +70,8 @@ public class LogInFragment extends Fragment {
             String password = loginPassword.getText().toString();
 
             mAuth.signInWithEmailAndPassword(email,password)
-                    .addOnSuccessListener(authResult -> Navigation.findNavController(view)
-                            .navigate(R.id.action_logInFragment_to_mainFragment))
-                    .addOnFailureListener(e -> Toast.makeText(getActivity(),e.getLocalizedMessage().toString()
-                            ,Toast.LENGTH_LONG).show());
+                    .addOnSuccessListener(authResult -> Navigation.findNavController(view).navigate(R.id.action_logInFragment_to_mainFragment))
+                    .addOnFailureListener(e -> Toast.makeText(getActivity(),e.getLocalizedMessage().toString(),Toast.LENGTH_LONG).show());
 
 
     }

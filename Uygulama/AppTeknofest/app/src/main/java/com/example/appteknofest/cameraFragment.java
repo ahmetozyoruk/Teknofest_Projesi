@@ -27,9 +27,7 @@ import java.io.ByteArrayOutputStream;
 public class cameraFragment extends Fragment {
 
     ImageView imageIv;
-    ImageView galleryIv;
     ImageView recordIv;
-
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -49,17 +47,17 @@ public class cameraFragment extends Fragment {
         super.onViewCreated(view, savedInstanceState);
 
         imageIv = view.findViewById(R.id.imageIv);
-        galleryIv = view.findViewById(R.id.galleryIv);
-        recordIv = view.findViewById(R.id.galleryIv);
+        recordIv = view.findViewById(R.id.recordIv);
 
         imageIv.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 Intent i = new Intent(getContext(),demonstrateImageActivity.class);
                 startActivity(i);
-
             }
         });
+
+
 
 
 

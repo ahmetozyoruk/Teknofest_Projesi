@@ -53,33 +53,21 @@
             android:id="@+id/action_mainFragment_to_deviceSettingsFragment"
             app:destination="@id/deviceSettingsFragment" />
         <action
-            android:id="@+id/action_mainFragment_to_communicationFragment"
-            app:destination="@id/communicationFragment" />
-        <action
             android:id="@+id/action_mainFragment_to_appSettingsFragment"
             app:destination="@id/appSettingsFragment" />
         <action
             android:id="@+id/action_mainFragment_to_cameraFragment"
             app:destination="@id/cameraFragment" />
-        <action
-            android:id="@+id/action_mainFragment_to_othersFragment"
-            app:destination="@id/othersFragment" />
     </fragment>
-    <fragment
-        android:id="@+id/othersFragment"
-        android:name="com.example.appteknofest.othersFragment"
-        android:label="fragment_others"
-        tools:layout="@layout/fragment_others" />
     <fragment
         android:id="@+id/deviceSettingsFragment"
         android:name="com.example.appteknofest.deviceSettingsFragment"
         android:label="fragment_device_settings"
-        tools:layout="@layout/fragment_device_settings" />
-    <fragment
-        android:id="@+id/communicationFragment"
-        android:name="com.example.appteknofest.communicationFragment"
-        android:label="fragment_communication"
-        tools:layout="@layout/fragment_communication" />
+        tools:layout="@layout/fragment_device_settings" >
+        <action
+            android:id="@+id/action_deviceSettingsFragment_to_distanceFragment"
+            app:destination="@id/distanceFragment" />
+    </fragment>
     <fragment
         android:id="@+id/cameraFragment"
         android:name="com.example.appteknofest.cameraFragment"
@@ -89,5 +77,22 @@
         android:id="@+id/appSettingsFragment"
         android:name="com.example.appteknofest.appSettingsFragment"
         android:label="fragment_app_settings"
-        tools:layout="@layout/fragment_app_settings" />
+        tools:layout="@layout/fragment_app_settings" >
+        <action
+            android:id="@+id/action_appSettingsFragment_to_brightnessFragment"
+            app:destination="@id/brightnessFragment" />
+        <action
+            android:id="@+id/action_appSettingsFragment_to_introductionragment"
+            app:destination="@id/introductionragment" />
+    </fragment>
+    <fragment
+        android:id="@+id/distanceFragment"
+        android:name="com.example.appteknofest.distanceFragment"
+        android:label="fragment_distance"
+        tools:layout="@layout/fragment_distance" />
+    <fragment
+        android:id="@+id/brightnessFragment"
+        android:name="com.example.appteknofest.brightnessFragment"
+        android:label="fragment_brightness"
+        tools:layout="@layout/fragment_brightness" />
 </navigation>

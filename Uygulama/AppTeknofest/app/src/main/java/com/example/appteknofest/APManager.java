@@ -151,7 +151,7 @@ public class APManager {
 //                ssid = "AndroidAP_" + new Random().nextInt(10000);
                 ssid = "eyefamGozluk";
 //                password = getRandomPassword();
-                password = "eyefam";
+                password = "eyefam12345";
                 WifiConfiguration wifiConfiguration = new WifiConfiguration();
                 wifiConfiguration.SSID = ssid;
                 wifiConfiguration.preSharedKey = password;
